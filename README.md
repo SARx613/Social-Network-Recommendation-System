@@ -139,3 +139,35 @@ or directly:
 ```bash
 docker compose run --rm tests
 ```
+
+
+
+## 👥 Team Contributions
+
+### Commit Statistics
+
+| Member | Commits | Percentage | Pull Requests |
+|--------|---------|------------|---------------|
+| William Peltier | 10 | 37% | N/A (not available from local git) |
+| Simon Amar | 10 | 37% | N/A (not available from local git) |
+| Yassine ERRAJI | 7 | 26% | N/A (not available from local git) |
+
+*Total*: 27 commits
+
+> Note: commit counts were computed from local git history (`git shortlog -sne --all`) and
+> Simon's contributions were aggregated across both `simon5.amar@gmail.com` and
+> `69014131+SARx613@users.noreply.github.com`. PR statistics require GitHub metadata (PR merges
+> can be squash/rebase without merge commits).
+
+### Role Distribution
+
+- **William Peltier**: recommendation logic (mutual connections, Pearson), user/job embedding logic
+- **Simon Amar**: FastAPI endpoints & API models, Docker/Makefile tooling, test suite scaffolding
+- **Yassine ERRAJI**: Neo4j configuration/connection layer, ETL integration (jobs/snap), dependency setup
+
+### Major Pull Requests
+
+1. [#? - Implement graph schema and constraints](link)
+2. [#? - Add FastAPI endpoints for recommendations](link)
+3. [#? - Setup pytest suite and Docker tests](link)
+4. [#? - Add minimal UI / demo utilities](link)
