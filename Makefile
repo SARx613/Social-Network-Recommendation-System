@@ -1,5 +1,3 @@
-PYTHON ?= python
-
 .PHONY: up down logs api tests lint etl-snap etl-jobs etl-user-emb
 
 help:
@@ -7,14 +5,14 @@ help:
 	@echo "  make up           - Build and start all Docker services"
 	@echo "  make down         - Stop and remove Docker services"
 	@echo "  make logs         - Tail Docker logs"
-	@echo "  make api          - Run the FastAPI app locally with uvicorn"
-	@echo "  make tests        - Run pytest test suite"
-	@echo "  make lint         - Run pylint on app, scripts, and tests"
-	@echo "  make etl-snap     - Load SNAP GitHub data into Neo4j"
-	@echo "  make etl-jobs     - Load LinkedIn job listings into Neo4j"
-	@echo "  make etl-user-emb - Create user embeddings in Neo4j"
+	@echo "  make api          - Show API access info (API runs automatically with 'make up')"
+	@echo "  make tests        - Run pytest test suite in Docker"
+	@echo "  make lint         - Run pylint in Docker on app, scripts, and tests"
+	@echo "  make etl-snap     - Load SNAP GitHub data into Neo4j (runs in Docker)"
+	@echo "  make etl-jobs     - Load LinkedIn job listings into Neo4j (runs in Docker)"
+	@echo "  make etl-user-emb - Create user embeddings in Neo4j (runs in Docker)"
 	@echo "  make begin        - Load all data into Neo4j"
-	@echo "  make pip          - Install dependencies"
+	@echo "  make pip          - Install dependencies in Docker container"
 
 up:
 	docker compose up --build
@@ -26,22 +24,24 @@ logs:
 	docker compose logs -f
 
 api:
-	$(PYTHON) -m uvicorn app.main:app --reload
+	@echo "Note: The API is already running in Docker via 'make up'."
+	@echo "Access it at http://localhost:8000/docs"
+	@echo "To restart with reload, use: docker compose restart api"
 
 tests:
-	$(PYTHON) -m pytest -q
+	docker compose run --rm tests
 
 lint:
-	$(PYTHON) -m pylint app scripts tests --exit-zero || true
+	docker compose exec api pylint app scripts tests --exit-zero || true
 
 etl-snap:
-	$(PYTHON) -m scripts.load_snap
+	docker compose exec api python -m scripts.load_snap
 
 etl-jobs:
-	$(PYTHON) -m scripts.load_jobs
+	docker compose exec api python -m scripts.load_jobs
 
 etl-user-emb:
-	$(PYTHON) -m scripts.create_user_embeddings
+	docker compose exec api python -m scripts.create_user_embeddings
 
 begin:
 	make etl-snap
@@ -49,4 +49,4 @@ begin:
 	make etl-user-emb
 
 pip:
-	pip install -r requirements.txt
+	docker compose exec api pip install -r requirements.txt

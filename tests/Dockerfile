@@ -18,6 +18,6 @@ RUN pip install --no-cache-dir -r /tests/requirements.txt
 COPY app /tests/app
 COPY tests /tests/tests
 
-CMD ["pytest", "-q"]
+CMD ["python", "-m", "pytest", "-q"]
 
 
