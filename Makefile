@@ -11,7 +11,7 @@ help:
 	@echo "  make etl-snap     - Load SNAP GitHub data into Neo4j (runs in Docker)"
 	@echo "  make etl-jobs     - Load LinkedIn job listings into Neo4j (runs in Docker)"
 	@echo "  make etl-user-emb - Create user embeddings in Neo4j (runs in Docker)"
-	@echo "  make begin        - Load all data into Neo4j"
+	@echo "  make run        - Load all data into Neo4j"
 	@echo "  make pip          - Install dependencies in Docker container"
 
 up:
@@ -43,7 +43,8 @@ etl-jobs:
 etl-user-emb:
 	docker compose exec api python -m scripts.create_user_embeddings
 
-begin:
+run:
+	make pip
 	make etl-snap
 	make etl-jobs
 	make etl-user-emb
